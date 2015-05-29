@@ -1,0 +1,17 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building counter 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ counter ---
+[INFO] com.ilopezluna:counter:jar:1.0-SNAPSHOT
+[INFO] \- junit:junit:jar:4.12:test
+[INFO]    \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.488 s
+[INFO] Finished at: 2015-05-29T23:31:30+02:00
+[INFO] Final Memory: 12M/155M
+[INFO] ------------------------------------------------------------------------
