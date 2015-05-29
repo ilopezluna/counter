@@ -21,4 +21,26 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.jcabi</groupId>
+                <artifactId>jcabi-dynamodb-maven-plugin</artifactId>
+                <version>0.7.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>start</goal>
+                            <goal>stop</goal>
+                        </goals>
+                        <configuration>
+                            <port>10500</port>
+                            <dist>/Users/ignasi/Desktop/DynamoDB/dynamodb_local_2015-04-27_1.0</dist>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
