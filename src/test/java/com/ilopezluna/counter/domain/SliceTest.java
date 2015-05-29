@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
 public class SliceTest {
 
     private final static int DEFAULT_INDEX = 0;
-    private static final int DEFAULT_POSITION = 0;
-    private static final int OTHER_POSITION = 1;
+    private final static int DEFAULT_POSITION = 0;
+    private final static int OTHER_POSITION = 1;
 
     @Before
     public void setUp() throws Exception {

@@ -8,14 +8,30 @@ import java.util.Map;
  */
 public class DataPoint {
 
+    private static final Integer MAX_SLICE = 100;
+
     private Map<Integer, Slice> slices = new HashMap<Integer, Slice>();
 
-    public void hit(Integer key, int position) {
-        if ( !slices.containsKey(key) ) {
-            Slice slice = new Slice(key);
-            slices.put(key, slice);
+    public void hit(int id) {
+        int sliceId = getSliceId(id);
+        int position = getPosition(id);
+        hit(sliceId, position);
+    }
+
+    public int getSliceId(int id) {
+        return id / MAX_SLICE;
+    }
+
+    public static int getPosition(long id) {
+        return (int) (id % MAX_SLICE);
+    }
+
+    private void hit(Integer sliceId, int position) {
+        if ( !slices.containsKey(sliceId) ) {
+            Slice slice = new Slice(sliceId);
+            slices.put(sliceId, slice);
         }
-        slices.get(key).hit(position);
+        slices.get(sliceId).hit(position);
     }
 
     public long count() {

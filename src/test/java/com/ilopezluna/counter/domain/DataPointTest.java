@@ -10,10 +10,8 @@ import static org.junit.Assert.*;
  */
 public class DataPointTest {
 
-    private static final Integer DEFAULT_SLICE = 0;
-    private static final Integer OTHER_SLICE = 1;
-    private static final int DEFAULT_POSITION = 0;
-    private static final Integer OTHER_POSITION = 1;
+    private final static Integer DEFAULT_ID= 0;
+    private final static Integer OTHER_ID= 1;
 
     @Test
     public void testHit() throws Exception {
@@ -21,12 +19,12 @@ public class DataPointTest {
         DataPoint against = new DataPoint();
 
         Assert.assertEquals(base.count(), against.count());
-        base.hit(DEFAULT_SLICE, DEFAULT_POSITION);
+        base.hit(DEFAULT_ID);
         Assert.assertNotEquals(base.count(), against.count());
-        against.hit(DEFAULT_SLICE, DEFAULT_POSITION);
+        against.hit(DEFAULT_ID);
         Assert.assertEquals(base.count(), against.count());
 
-        base.hit(DEFAULT_SLICE, DEFAULT_POSITION);
+        base.hit(DEFAULT_ID);
         Assert.assertEquals(base.count(), against.count());
     }
 
@@ -35,23 +33,17 @@ public class DataPointTest {
         DataPoint dataPoint = new DataPoint();
         Assert.assertEquals(0, dataPoint.count());
 
-        dataPoint.hit(DEFAULT_SLICE, DEFAULT_POSITION);
+        dataPoint.hit(DEFAULT_ID);
         Assert.assertEquals(1, dataPoint.count());
 
-        dataPoint.hit(DEFAULT_SLICE, DEFAULT_POSITION);
+        dataPoint.hit(DEFAULT_ID);
         Assert.assertEquals(1, dataPoint.count());
 
-        dataPoint.hit(DEFAULT_SLICE, OTHER_POSITION);
+        dataPoint.hit(OTHER_ID);
         Assert.assertEquals(2, dataPoint.count());
 
-        dataPoint.hit(OTHER_SLICE, DEFAULT_POSITION);
-        Assert.assertEquals(3, dataPoint.count());
-
-        dataPoint.hit(OTHER_SLICE, OTHER_POSITION);
-        Assert.assertEquals(4, dataPoint.count());
-
-        dataPoint.hit(OTHER_SLICE, OTHER_POSITION);
-        Assert.assertEquals(4, dataPoint.count());
+        dataPoint.hit(OTHER_ID);
+        Assert.assertEquals(2, dataPoint.count());
     }
 
 }
