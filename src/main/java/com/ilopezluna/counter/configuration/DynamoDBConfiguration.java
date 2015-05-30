@@ -1,9 +1,6 @@
 package com.ilopezluna.counter.configuration;
 
-import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 
@@ -12,14 +9,19 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
  */
 public class DynamoDBConfiguration {
 
-    public static DynamoDB configure() {
-        AWSCredentials awsCredentials = new BasicAWSCredentials("xxx", "xxx");
+    private static DynamoDB dynamoDB;
 
-        AmazonDynamoDBClient client = new AmazonDynamoDBClient(awsCredentials);
+    private static void configure() {
+        AmazonDynamoDBClient client = new AmazonDynamoDBClient(new BasicAWSCredentials("xxx", "xxx"));
         client.setEndpoint("http://localhost:8000");
-        client.setRegion(Region.getRegion(Regions.EU_WEST_1));
 
-        DynamoDB dynamoDB = new DynamoDB(client);
+        dynamoDB = new DynamoDB(client);
+    }
+
+    public static DynamoDB getDynamoDB() {
+        if (dynamoDB == null) {
+            configure();
+        }
         return dynamoDB;
     }
 }
