@@ -14,18 +14,8 @@ public class DynamoDBHelper {
 
     private static DynamoDB dynamoDB = DynamoDBConfiguration.getDynamoDB();
 
-    public static void getTableInformation(String tableName) {
-
-        System.out.println("Describing " + tableName);
-
-        TableDescription tableDescription = dynamoDB.getTable(tableName).describe();
-        System.out.format("Name: %s:\n" + "Status: %s \n"
-                        + "Provisioned Throughput (read capacity units/sec): %d \n"
-                        + "Provisioned Throughput (write capacity units/sec): %d \n",
-                tableDescription.getTableName(),
-                tableDescription.getTableStatus(),
-                tableDescription.getProvisionedThroughput().getReadCapacityUnits(),
-                tableDescription.getProvisionedThroughput().getWriteCapacityUnits());
+    public static TableDescription getTableDescription(String tableName) {
+        return dynamoDB.getTable(tableName).describe();
     }
 
     private static void deleteTable(String tableName) {
