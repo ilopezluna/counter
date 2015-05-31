@@ -1,6 +1,6 @@
-package com.ilopezluna.counter.repository;
+package com.ilopezluna.uniques.repository;
 
-import com.ilopezluna.counter.domain.DataPoint;
+import com.ilopezluna.uniques.domain.DataPoint;
 
 /**
  * Created by ignasi on 31/5/15.

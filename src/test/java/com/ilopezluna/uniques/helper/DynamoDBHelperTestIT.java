@@ -1,9 +1,9 @@
-package com.ilopezluna.counter.helper;
+package com.ilopezluna.uniques.helper;
 
 import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
-import com.ilopezluna.counter.configuration.DynamoDBConfiguration;
+import com.ilopezluna.uniques.configuration.DynamoDBConfiguration;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

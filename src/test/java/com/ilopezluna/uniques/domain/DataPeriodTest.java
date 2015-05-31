@@ -1,4 +1,4 @@
-package com.ilopezluna.counter.domain;
+package com.ilopezluna.uniques.domain;
 
 import org.junit.Assert;
 import org.junit.Test;

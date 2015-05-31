@@ -1,4 +1,4 @@
-package com.ilopezluna.counter.domain;
+package com.ilopezluna.uniques.domain;
 
 import java.time.LocalDate;
 import java.util.*;

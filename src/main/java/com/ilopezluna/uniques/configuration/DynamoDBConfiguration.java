@@ -1,4 +1,4 @@
-package com.ilopezluna.counter.configuration;
+package com.ilopezluna.uniques.configuration;
 
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;

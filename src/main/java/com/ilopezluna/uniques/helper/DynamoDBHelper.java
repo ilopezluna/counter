@@ -1,9 +1,10 @@
-package com.ilopezluna.counter.helper;
+package com.ilopezluna.uniques.helper;
 
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.*;
-import com.ilopezluna.counter.configuration.DynamoDBConfiguration;
+import com.ilopezluna.uniques.configuration.DynamoDBConfiguration;
+import com.ilopezluna.uniques.repository.DataPointRepository;
 
 import java.util.ArrayList;
 
@@ -99,4 +100,54 @@ public class DynamoDBHelper {
                         .withReadCapacityUnits(readCapacityUnits)
                         .withWriteCapacityUnits(writeCapacityUnits);
     }
+
+    public static Table createDataPointTable() {
+
+        try {
+
+            ArrayList<AttributeDefinition> attributeDefinitions = new ArrayList<AttributeDefinition>();
+            attributeDefinitions.add(new AttributeDefinition()
+                    .withAttributeName(DataPointRepository.PRIMARY_KEY)
+                    .withAttributeType("S"));
+            attributeDefinitions.add(new AttributeDefinition()
+                    .withAttributeName(DataPointRepository.RANGE_KEY)
+                    .withAttributeType("S"));
+
+            ArrayList<KeySchemaElement> keySchema = new ArrayList<KeySchemaElement>();
+            keySchema.add(new KeySchemaElement()
+                    .withAttributeName(DataPointRepository.PRIMARY_KEY)
+                    .withKeyType(KeyType.HASH));
+
+            keySchema.add(new KeySchemaElement()
+                    .withAttributeName(DataPointRepository.RANGE_KEY)
+                    .withKeyType(KeyType.RANGE));
+
+
+
+
+
+            CreateTableRequest request = new CreateTableRequest()
+                    .withTableName(DataPointRepository.TABLE_NAME)
+                    .withKeySchema(keySchema)
+                    .withAttributeDefinitions(attributeDefinitions)
+                    .withProvisionedThroughput(new ProvisionedThroughput()
+                            .withReadCapacityUnits(5L)
+                            .withWriteCapacityUnits(6L));
+
+            System.out.println("Issuing CreateTable request for " + DataPointRepository.TABLE_NAME);
+            Table table = dynamoDB.createTable(request);
+
+            System.out.println("Waiting for " + DataPointRepository.TABLE_NAME
+                    + " to be created...this may take a while...");
+            table.waitForActive();
+            return table;
+
+        } catch (Exception e) {
+            System.err.println("CreateTable request failed for " + DataPointRepository.TABLE_NAME);
+            System.err.println(e.getMessage());
+        }
+
+        return null;
+    }
+
 }
