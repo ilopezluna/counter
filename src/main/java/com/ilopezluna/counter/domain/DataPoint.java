@@ -10,7 +10,7 @@ public class DataPoint {
 
     private final String key;
     private final LocalDate localDate;
-    private final BitSet uniques;
+    private BitSet uniques;
 
     public DataPoint(String key, LocalDate localDate) {
         this.key = key;
@@ -28,6 +28,10 @@ public class DataPoint {
 
     public BitSet getUniques() {
         return uniques;
+    }
+
+    public void setUniques(BitSet uniques) {
+        this.uniques = uniques;
     }
 
     public void hit(int bitIndex) {

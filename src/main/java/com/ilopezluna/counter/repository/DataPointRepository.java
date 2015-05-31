@@ -14,5 +14,5 @@ public interface DataPointRepository {
 
     void save(DataPoint dataPoint);
     void delete(DataPoint dataPoint);
-    DataPoint get();
+    DataPoint get(String key);
 }
