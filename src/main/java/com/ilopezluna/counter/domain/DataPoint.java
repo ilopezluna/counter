@@ -1,44 +1,40 @@
 package com.ilopezluna.counter.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Created by ignasi on 29/5/15.
  */
 public class DataPoint {
 
-    private static final Integer MAX_SLICE = 100;
+    private final String key;
+    private final LocalDate localDate;
+    private final BitSet uniques;
 
-    private Map<Integer, Slice> slices = new HashMap<Integer, Slice>();
-
-    public void hit(int id) {
-        int sliceId = getSliceId(id);
-        int position = getPosition(id);
-        hit(sliceId, position);
+    public DataPoint(String key, LocalDate localDate) {
+        this.key = key;
+        this.localDate = localDate;
+        uniques = new BitSet();
     }
 
-    public int getSliceId(int id) {
-        return id / MAX_SLICE;
+    public String getKey() {
+        return key;
     }
 
-    public static int getPosition(long id) {
-        return (int) (id % MAX_SLICE);
+    public LocalDate getLocalDate() {
+        return localDate;
     }
 
-    private void hit(Integer sliceId, int position) {
-        if ( !slices.containsKey(sliceId) ) {
-            Slice slice = new Slice(sliceId);
-            slices.put(sliceId, slice);
-        }
-        slices.get(sliceId).hit(position);
+    public BitSet getUniques() {
+        return uniques;
     }
 
-    public long count() {
-        long count = 0l;
-        for (Slice slice : slices.values()) {
-            count += slice.count();
-        }
-        return count;
+    public void hit(int bitIndex) {
+        uniques.set(bitIndex);
+    }
+
+    public int count() {
+        return uniques.cardinality();
     }
 }

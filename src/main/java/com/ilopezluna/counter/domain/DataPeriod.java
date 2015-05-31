@@ -9,12 +9,14 @@ import java.util.Map;
  */
 public class DataPeriod {
 
+    private final String key;
     private final LocalDate from;
     private final LocalDate to;
 
     private final Map<LocalDate, DataPoint> dataPoints = new HashMap<LocalDate, DataPoint>();
 
-    public DataPeriod(LocalDate from, LocalDate to) {
+    public DataPeriod(String key, LocalDate from, LocalDate to) {
+        this.key = key;
         this.from = from;
         this.to = to;
     }
@@ -34,8 +36,9 @@ public class DataPeriod {
 
     private DataPoint getOrCreate() {
         LocalDate now = LocalDate.now();
+        String dataPointKey = key + now.toString();
         if ( !dataPoints.containsKey(now) ) {
-            DataPoint dataPoint = new DataPoint();
+            DataPoint dataPoint = new DataPoint(dataPointKey, now);
             dataPoints.put(now, dataPoint);
         }
 

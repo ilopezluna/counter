@@ -9,11 +9,8 @@ import org.junit.Test;
  */
 public class DynamoDBConfigurationTestIT {
 
-    private static final String TABLE_NAME = "tableName";
-
     @Test
     public void testConfigure() throws Exception {
-
         DynamoDB dynamoDB = DynamoDBConfiguration.getDynamoDB();
         Assert.assertNotNull(dynamoDB);
     }
