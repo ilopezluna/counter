@@ -19,73 +19,6 @@ public class DynamoDBHelper {
         return dynamoDB.getTable(tableName).describe();
     }
 
-    public static void createTable(
-            String tableName, long readCapacityUnits, long writeCapacityUnits,
-            String hashKeyName, String hashKeyType) throws InterruptedException {
-
-        createTable(tableName, readCapacityUnits, writeCapacityUnits,
-                hashKeyName, hashKeyType, null, null);
-    }
-
-    private static void createTable(
-        String tableName, long readCapacityUnits, long writeCapacityUnits,
-        String hashKeyName, String hashKeyType,
-        String rangeKeyName, String rangeKeyType) throws InterruptedException {
-
-        ArrayList<KeySchemaElement> keySchema = getKeySchemaElements(hashKeyName, rangeKeyName);
-        ArrayList<AttributeDefinition> attributeDefinitions = getAttributeDefinitions(hashKeyName, hashKeyType, rangeKeyName, rangeKeyType);
-        ProvisionedThroughput provisionedThroughput = getProvisionedThroughput(readCapacityUnits, writeCapacityUnits);
-        CreateTableRequest request = getCreateTableRequest(tableName, keySchema, attributeDefinitions, provisionedThroughput);
-
-
-        System.out.println("Issuing CreateTable request for " + tableName);
-        Table table = dynamoDB.createTable(request);
-        System.out.println("Waiting for " + tableName
-                + " to be created...this may take a while...");
-        table.waitForActive();
-    }
-
-    private static ArrayList<KeySchemaElement> getKeySchemaElements(String hashKeyName, String rangeKeyName) {
-        ArrayList<KeySchemaElement> keySchema = new ArrayList<KeySchemaElement>();
-        keySchema.add(new KeySchemaElement()
-                .withAttributeName(hashKeyName)
-                .withKeyType(KeyType.HASH));
-        if (rangeKeyName != null) {
-            keySchema.add(new KeySchemaElement()
-                    .withAttributeName(rangeKeyName)
-                    .withKeyType(KeyType.RANGE));
-        }
-        return keySchema;
-    }
-
-    private static ArrayList<AttributeDefinition> getAttributeDefinitions(String hashKeyName, String hashKeyType, String rangeKeyName, String rangeKeyType) {
-        ArrayList<AttributeDefinition> attributeDefinitions = new ArrayList<AttributeDefinition>();
-        attributeDefinitions.add(new AttributeDefinition()
-                .withAttributeName(hashKeyName)
-                .withAttributeType(hashKeyType));
-
-        if (rangeKeyName != null) {
-            attributeDefinitions.add(new AttributeDefinition()
-                    .withAttributeName(rangeKeyName)
-                    .withAttributeType(rangeKeyType));
-        }
-        return attributeDefinitions;
-    }
-
-    private static CreateTableRequest getCreateTableRequest(String tableName, ArrayList<KeySchemaElement> keySchema, ArrayList<AttributeDefinition> attributeDefinitions, ProvisionedThroughput provisionedThroughput) {
-        return new CreateTableRequest()
-                        .withTableName(tableName)
-                        .withKeySchema(keySchema)
-                        .withAttributeDefinitions(attributeDefinitions)
-                        .withProvisionedThroughput(provisionedThroughput);
-    }
-
-    private static ProvisionedThroughput getProvisionedThroughput(long readCapacityUnits, long writeCapacityUnits) {
-        return new ProvisionedThroughput()
-                        .withReadCapacityUnits(readCapacityUnits)
-                        .withWriteCapacityUnits(writeCapacityUnits);
-    }
-
     public static Table createDataPointTable() throws InterruptedException {
         ArrayList<AttributeDefinition> attributeDefinitions = new ArrayList<AttributeDefinition>();
         attributeDefinitions.add(new AttributeDefinition()
@@ -109,8 +42,8 @@ public class DynamoDBHelper {
                 .withKeySchema(keySchema)
                 .withAttributeDefinitions(attributeDefinitions)
                 .withProvisionedThroughput(new ProvisionedThroughput()
-                        .withReadCapacityUnits(5L)
-                        .withWriteCapacityUnits(6L));
+                        .withReadCapacityUnits(1L)
+                        .withWriteCapacityUnits(1L));
 
         System.out.println("Issuing CreateTable request for " + DataPointRepository.TABLE_NAME);
         Table table = dynamoDB.createTable(request);

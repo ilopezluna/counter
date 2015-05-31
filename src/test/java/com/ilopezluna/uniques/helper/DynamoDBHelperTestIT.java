@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
 import com.ilopezluna.uniques.configuration.DynamoDBConfiguration;
+import com.ilopezluna.uniques.repository.DataPointRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,10 +13,6 @@ import org.junit.Test;
  * Created by ignasi on 30/5/15.
  */
 public class DynamoDBHelperTestIT {
-
-    private static final String TABLE_NAME = "table";
-    private static final String PRIMARY_KEY = "hashKeyName";
-    private static final String HASH_KEY_TYPE = "N";
 
     private DynamoDB dynamoDB;
 
@@ -31,19 +28,19 @@ public class DynamoDBHelperTestIT {
     @Test
     public void testGetTableInformation() throws Exception {
 
-        DynamoDBHelper.createTable(TABLE_NAME, 1, 1, PRIMARY_KEY, HASH_KEY_TYPE);
-        TableDescription tableDescription = DynamoDBHelper.getTableDescription(TABLE_NAME);
-        Assert.assertEquals(TABLE_NAME, tableDescription.getTableName());
+        DynamoDBHelper.createDataPointTable();
+        TableDescription tableDescription = DynamoDBHelper.getTableDescription(DataPointRepository.TABLE_NAME);
+        Assert.assertEquals(DataPointRepository.TABLE_NAME, tableDescription.getTableName());
         Assert.assertEquals(1, (long)tableDescription.getProvisionedThroughput().getReadCapacityUnits());
         Assert.assertEquals(1, (long) tableDescription.getProvisionedThroughput().getWriteCapacityUnits());
     }
 
     @Test
     public void testCreateTable() throws Exception {
-        DynamoDBHelper.createTable(TABLE_NAME, 1, 1, PRIMARY_KEY, HASH_KEY_TYPE);
+        DynamoDBHelper.createDataPointTable();
         TableCollection<ListTablesResult> tables = dynamoDB.listTables();
         for (Table table : tables) {
-            Assert.assertEquals(TABLE_NAME, table.getTableName());
+            Assert.assertEquals(DataPointRepository.TABLE_NAME, table.getTableName());
         }
     }
 }
