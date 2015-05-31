@@ -1,5 +1,6 @@
 package com.ilopezluna.uniques.repository;
 
+import com.ilopezluna.uniques.domain.DataPeriod;
 import com.ilopezluna.uniques.domain.DataPoint;
 
 import java.time.LocalDate;
@@ -17,4 +18,5 @@ public interface DataPointRepository {
     void save(DataPoint dataPoint);
     void delete(String key, LocalDate localDate);
     DataPoint get(String key, LocalDate localDate);
+    DataPeriod getDataPeriod(String key, LocalDate from, LocalDate to);
 }

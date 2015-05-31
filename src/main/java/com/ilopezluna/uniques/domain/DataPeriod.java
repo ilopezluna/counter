@@ -1,6 +1,7 @@
 package com.ilopezluna.uniques.domain;
 
 import java.time.LocalDate;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,11 +46,15 @@ public class DataPeriod {
         return dataPoints.get(now);
     }
 
-    public long count() {
-        long count = 0l;
+    public int count() {
+        BitSet bitSet = new BitSet();
         for (DataPoint dataPoint : dataPoints.values()) {
-            count += dataPoint.count();
+            bitSet.or(dataPoint.getUniques());
         }
-        return count;
+        return bitSet.cardinality();
+    }
+
+    public void addDataPoint(DataPoint dataPoint) {
+        dataPoints.put(dataPoint.getLocalDate(), dataPoint);
     }
 }

@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.TableCollection;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 import com.ilopezluna.uniques.configuration.DynamoDBConfiguration;
+import com.ilopezluna.uniques.domain.DataPeriod;
 import com.ilopezluna.uniques.domain.DataPoint;
 import com.ilopezluna.uniques.helper.DynamoDBHelper;
 import org.junit.Assert;
@@ -67,5 +68,42 @@ public class DataPointRepositoryImplTestIT {
         BitSet uniques = (BitSet) dataPoint.getUniques().clone();
         uniques.or(fromDynamo.getUniques());
         Assert.assertEquals( 1, uniques.cardinality() );
+    }
+
+    @Test
+    public void testGetDataPeriod() throws Exception {
+        LocalDate from = LocalDate.now().minusDays(10);
+        LocalDate to = LocalDate.now();
+
+        DataPeriod dataPeriod = dataPointRepository.getDataPeriod(DEFAULT_KEY, from, to);
+        Assert.assertNotNull(dataPeriod);
+        Assert.assertEquals(0, dataPeriod.count());
+
+        LocalDate minus4Days = LocalDate.now().minusDays(4);
+        DataPoint dataPoint = new DataPoint(DEFAULT_KEY, minus4Days);
+        dataPoint.hit(1);
+        dataPointRepository.save(dataPoint);
+
+        dataPeriod = dataPointRepository.getDataPeriod(DEFAULT_KEY, from, to);
+        Assert.assertNotNull(dataPeriod);
+        Assert.assertEquals(1, dataPeriod.count());
+
+
+        LocalDate minus8Days = LocalDate.now().minusDays(8);
+        dataPoint = new DataPoint(DEFAULT_KEY, minus8Days);
+        dataPoint.hit(1);
+        dataPointRepository.save(dataPoint);
+
+        dataPeriod = dataPointRepository.getDataPeriod(DEFAULT_KEY, from, to);
+        Assert.assertNotNull(dataPeriod);
+        Assert.assertEquals(1, dataPeriod.count());
+
+        dataPoint = new DataPoint(DEFAULT_KEY, minus4Days);
+        dataPoint.hit(2);
+        dataPointRepository.save(dataPoint);
+
+        dataPeriod = dataPointRepository.getDataPeriod(DEFAULT_KEY, from, to);
+        Assert.assertNotNull(dataPeriod);
+        Assert.assertEquals(2   , dataPeriod.count());
     }
 }
