@@ -1,11 +1,12 @@
 package com.ilopezluna.uniques.repository;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.KeyAttribute;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.ilopezluna.uniques.domain.DataPoint;
+import com.ilopezluna.uniques.helper.BitSetHelper;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.BitSet;
 
 /**
@@ -31,11 +32,13 @@ public class DataPointRepositoryImpl implements DataPointRepository {
         table.deleteItem(PRIMARY_KEY, dataPoint.getKey());
     }
 
-    public DataPoint get(String key) {
-        Item item = table.getItem(PRIMARY_KEY, key);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
-        LocalDate localDate = LocalDate.parse((String) item.get(RANGE_KEY), formatter);
-        BitSet uniques = (BitSet) item.get(UNIQUES_FIELD);
+    public DataPoint get(String key, LocalDate localDate) {
+        KeyAttribute keyAttribute = new KeyAttribute(PRIMARY_KEY, key);
+        KeyAttribute rangeAttribute = new KeyAttribute(RANGE_KEY, localDate.toString());
+
+        Item item = table.getItem(keyAttribute, rangeAttribute);
+        byte[] bytes = (byte[]) item.get(UNIQUES_FIELD);
+        BitSet uniques = BitSetHelper.fromByteArray(bytes);
 
         DataPoint dataPoint = new DataPoint(key, localDate);
         dataPoint.setUniques(uniques);

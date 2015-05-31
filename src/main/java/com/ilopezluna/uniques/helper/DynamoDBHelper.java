@@ -19,21 +19,6 @@ public class DynamoDBHelper {
         return dynamoDB.getTable(tableName).describe();
     }
 
-    private static void deleteTable(String tableName) {
-        Table table = dynamoDB.getTable(tableName);
-        try {
-            System.out.println("Issuing DeleteTable request for " + tableName);
-            table.delete();
-            System.out.println("Waiting for " + tableName
-                    + " to be deleted...this may take a while...");
-            table.waitForDelete();
-
-        } catch (Exception e) {
-            System.err.println("DeleteTable request failed for " + tableName);
-            System.err.println(e.getMessage());
-        }
-    }
-
     public static void createTable(
             String tableName, long readCapacityUnits, long writeCapacityUnits,
             String hashKeyName, String hashKeyType) throws InterruptedException {
@@ -101,53 +86,39 @@ public class DynamoDBHelper {
                         .withWriteCapacityUnits(writeCapacityUnits);
     }
 
-    public static Table createDataPointTable() {
+    public static Table createDataPointTable() throws InterruptedException {
+        ArrayList<AttributeDefinition> attributeDefinitions = new ArrayList<AttributeDefinition>();
+        attributeDefinitions.add(new AttributeDefinition()
+                .withAttributeName(DataPointRepository.PRIMARY_KEY)
+                .withAttributeType("S"));
+        attributeDefinitions.add(new AttributeDefinition()
+                .withAttributeName(DataPointRepository.RANGE_KEY)
+                .withAttributeType("S"));
 
-        try {
+        ArrayList<KeySchemaElement> keySchema = new ArrayList<KeySchemaElement>();
+        keySchema.add(new KeySchemaElement()
+                .withAttributeName(DataPointRepository.PRIMARY_KEY)
+                .withKeyType(KeyType.HASH));
 
-            ArrayList<AttributeDefinition> attributeDefinitions = new ArrayList<AttributeDefinition>();
-            attributeDefinitions.add(new AttributeDefinition()
-                    .withAttributeName(DataPointRepository.PRIMARY_KEY)
-                    .withAttributeType("S"));
-            attributeDefinitions.add(new AttributeDefinition()
-                    .withAttributeName(DataPointRepository.RANGE_KEY)
-                    .withAttributeType("S"));
+        keySchema.add(new KeySchemaElement()
+                .withAttributeName(DataPointRepository.RANGE_KEY)
+                .withKeyType(KeyType.RANGE));
 
-            ArrayList<KeySchemaElement> keySchema = new ArrayList<KeySchemaElement>();
-            keySchema.add(new KeySchemaElement()
-                    .withAttributeName(DataPointRepository.PRIMARY_KEY)
-                    .withKeyType(KeyType.HASH));
+        CreateTableRequest request = new CreateTableRequest()
+                .withTableName(DataPointRepository.TABLE_NAME)
+                .withKeySchema(keySchema)
+                .withAttributeDefinitions(attributeDefinitions)
+                .withProvisionedThroughput(new ProvisionedThroughput()
+                        .withReadCapacityUnits(5L)
+                        .withWriteCapacityUnits(6L));
 
-            keySchema.add(new KeySchemaElement()
-                    .withAttributeName(DataPointRepository.RANGE_KEY)
-                    .withKeyType(KeyType.RANGE));
+        System.out.println("Issuing CreateTable request for " + DataPointRepository.TABLE_NAME);
+        Table table = dynamoDB.createTable(request);
 
-
-
-
-
-            CreateTableRequest request = new CreateTableRequest()
-                    .withTableName(DataPointRepository.TABLE_NAME)
-                    .withKeySchema(keySchema)
-                    .withAttributeDefinitions(attributeDefinitions)
-                    .withProvisionedThroughput(new ProvisionedThroughput()
-                            .withReadCapacityUnits(5L)
-                            .withWriteCapacityUnits(6L));
-
-            System.out.println("Issuing CreateTable request for " + DataPointRepository.TABLE_NAME);
-            Table table = dynamoDB.createTable(request);
-
-            System.out.println("Waiting for " + DataPointRepository.TABLE_NAME
-                    + " to be created...this may take a while...");
-            table.waitForActive();
-            return table;
-
-        } catch (Exception e) {
-            System.err.println("CreateTable request failed for " + DataPointRepository.TABLE_NAME);
-            System.err.println(e.getMessage());
-        }
-
-        return null;
+        System.out.println("Waiting for " + DataPointRepository.TABLE_NAME
+                + " to be created...this may take a while...");
+        table.waitForActive();
+        return table;
     }
 
 }
