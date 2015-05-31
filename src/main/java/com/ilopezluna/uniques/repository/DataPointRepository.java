@@ -15,6 +15,6 @@ public interface DataPointRepository {
     String UNIQUES_FIELD = "U";
 
     void save(DataPoint dataPoint);
-    void delete(DataPoint dataPoint);
+    void delete(String key, LocalDate localDate);
     DataPoint get(String key, LocalDate localDate);
 }

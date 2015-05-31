@@ -42,6 +42,16 @@ public class DataPointRepositoryImplTestIT {
 
     @Test
     public void testDelete() throws Exception {
+        LocalDate now = LocalDate.now();
+        DataPoint dataPoint = new DataPoint(DEFAULT_KEY, now);
+        dataPoint.hit(1);
+        dataPointRepository.save(dataPoint);
+        DataPoint fromDynamo = dataPointRepository.get(dataPoint.getKey(), now);
+        Assert.assertNotNull(fromDynamo);
+
+        dataPointRepository.delete(dataPoint.getKey(), now);
+        fromDynamo = dataPointRepository.get(dataPoint.getKey(), now);
+        Assert.assertNull(fromDynamo);
 
     }
 

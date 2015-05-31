@@ -28,8 +28,11 @@ public class DataPointRepositoryImpl implements DataPointRepository {
         table.putItem(item);
     }
 
-    public void delete(DataPoint dataPoint) {
-        table.deleteItem(PRIMARY_KEY, dataPoint.getKey());
+    public void delete(String key, LocalDate localDate) {
+        KeyAttribute keyAttribute = new KeyAttribute(PRIMARY_KEY, key);
+        KeyAttribute rangeAttribute = new KeyAttribute(RANGE_KEY, localDate.toString());
+
+        table.deleteItem(keyAttribute, rangeAttribute);
     }
 
     public DataPoint get(String key, LocalDate localDate) {
@@ -37,11 +40,14 @@ public class DataPointRepositoryImpl implements DataPointRepository {
         KeyAttribute rangeAttribute = new KeyAttribute(RANGE_KEY, localDate.toString());
 
         Item item = table.getItem(keyAttribute, rangeAttribute);
-        byte[] bytes = (byte[]) item.get(UNIQUES_FIELD);
-        BitSet uniques = BitSetHelper.fromByteArray(bytes);
+        if (item != null) {
+            byte[] bytes = (byte[]) item.get(UNIQUES_FIELD);
+            BitSet uniques = BitSetHelper.fromByteArray(bytes);
 
-        DataPoint dataPoint = new DataPoint(key, localDate);
-        dataPoint.setUniques(uniques);
-        return dataPoint;
+            DataPoint dataPoint = new DataPoint(key, localDate);
+            dataPoint.setUniques(uniques);
+            return dataPoint;
+        }
+        return null;
     }
 }
