@@ -10,7 +10,7 @@ import java.time.LocalDate;
  */
 public class DataPeriodTest {
 
-    private final static String DEFAULT_KEY = "default";
+    private final static Key DEFAULT_KEY = new Key.KeyBuilder().add("default").build();
     private final static LocalDate DEFAULT_FROM = LocalDate.now();
     private final static LocalDate DEFAULT_TO = LocalDate.now().plusDays(1);
     private final static Integer DEFAULT_ID= 0;

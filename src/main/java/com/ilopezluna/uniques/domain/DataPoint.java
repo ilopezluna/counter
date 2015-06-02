@@ -8,17 +8,17 @@ import java.util.*;
  */
 public class DataPoint {
 
-    private final String key;
+    private final Key key;
     private final LocalDate localDate;
     private BitSet uniques;
 
-    public DataPoint(String key, LocalDate localDate) {
+    public DataPoint(Key key, LocalDate localDate) {
         this.key = key;
         this.localDate = localDate;
         uniques = new BitSet();
     }
 
-    public String getKey() {
+    public Key getKey() {
         return key;
     }
 

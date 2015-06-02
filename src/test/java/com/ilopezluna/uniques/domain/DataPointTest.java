@@ -10,8 +10,8 @@ import java.time.LocalDate;
  */
 public class DataPointTest {
 
-    private final static String DEFAULT_KEY = "default";
-    private final static String OTHER_KEY = "other";
+    private final static Key DEFAULT_KEY = new Key.KeyBuilder().add("default").build();
+    private final static Key OTHER_KEY = new Key.KeyBuilder().add("other").build();
     private final static Integer DEFAULT_ID= 0;
     private final static Integer OTHER_ID= 1;
     private final static LocalDate localDate= LocalDate.now();

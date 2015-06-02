@@ -2,6 +2,7 @@ package com.ilopezluna.uniques.repository;
 
 import com.ilopezluna.uniques.domain.DataPeriod;
 import com.ilopezluna.uniques.domain.DataPoint;
+import com.ilopezluna.uniques.domain.Key;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,7 @@ public interface DataPointRepository {
     String UNIQUES_FIELD = "U";
 
     void save(DataPoint dataPoint);
-    void delete(String key, LocalDate localDate);
-    DataPoint get(String key, LocalDate localDate);
-    DataPeriod getDataPeriod(String key, LocalDate from, LocalDate to);
+    void delete(Key key, LocalDate localDate);
+    DataPoint get(Key key, LocalDate localDate);
+    DataPeriod getDataPeriod(Key key, LocalDate from, LocalDate to);
 }

@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 import com.ilopezluna.uniques.configuration.DynamoDBConfiguration;
 import com.ilopezluna.uniques.domain.DataPeriod;
 import com.ilopezluna.uniques.domain.DataPoint;
+import com.ilopezluna.uniques.domain.Key;
 import com.ilopezluna.uniques.helper.DynamoDBHelper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,7 +21,7 @@ import java.util.BitSet;
  */
 public class DataPointRepositoryImplTestIT {
 
-    private static final String DEFAULT_KEY = "key";
+    private final static Key DEFAULT_KEY = new Key.KeyBuilder().add("default").build();
     private DataPointRepository dataPointRepository;
 
     @Before
