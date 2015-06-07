@@ -19,15 +19,9 @@ public class UniquesService {
         this.dataPointRepository = dataPointRepository;
     }
 
-    public void hit(String path, LocalDate localDate, int id) {
-        Key key = getKey(path);
-        hit(localDate, id, key);
-    }
-
     public void hit(String path, int id) {
-        LocalDate now = LocalDate.now();
         Key key = getKey(path);
-        hit(now, id, key);
+        hit(LocalDate.now(), id, key);
     }
 
     public void hit(LocalDate localDate, int id) {
