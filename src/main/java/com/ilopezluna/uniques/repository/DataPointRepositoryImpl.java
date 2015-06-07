@@ -61,7 +61,7 @@ public class DataPointRepositoryImpl implements DataPointRepository {
     }
 
     public DataPeriod getDataPeriod(Key key, LocalDate from, LocalDate to) {
-        final DataPeriod dataPeriod = new DataPeriod(key, from, to);
+        final DataPeriod dataPeriod = new DataPeriod(from, to);
 
         RangeKeyCondition rangeKeyCondition = new RangeKeyCondition(RANGE_KEY);
         rangeKeyCondition.between(from.toString(), to.toString());
