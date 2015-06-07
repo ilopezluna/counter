@@ -6,6 +6,8 @@ package com.ilopezluna.uniques.domain;
 public class Key {
 
     public final static String DEFAULT_KEY = "u";
+    public final static Key DEFAULT = new KeyBuilder().build();
+
     private final static String SEPARATOR = ":";
 
     private final String path;

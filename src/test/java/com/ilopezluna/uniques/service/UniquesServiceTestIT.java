@@ -73,23 +73,22 @@ public class UniquesServiceTestIT {
     @Test
     public void testHit1() throws Exception {
         final LocalDate now = LocalDate.now();
-        final Key key = new Key.KeyBuilder().add(SAMPLE_PATH).build();
 
-        DataPoint dataPoint = dataPointRepository.get(key, now);
+        DataPoint dataPoint = dataPointRepository.get(Key.DEFAULT, now);
         Assert.assertNull(dataPoint);
 
-        uniquesService.hit(SAMPLE_PATH, now, DEFAULT_ID);
-        dataPoint = dataPointRepository.get(key, now);
+        uniquesService.hit(now, DEFAULT_ID);
+        dataPoint = dataPointRepository.get(Key.DEFAULT, now);
         Assert.assertNotNull(dataPoint);
         Assert.assertEquals(1, dataPoint.count());
 
-        uniquesService.hit(SAMPLE_PATH, now, DEFAULT_ID);
-        dataPoint = dataPointRepository.get(key, now);
+        uniquesService.hit(now, DEFAULT_ID);
+        dataPoint = dataPointRepository.get(Key.DEFAULT, now);
         Assert.assertNotNull(dataPoint);
         Assert.assertEquals(1, dataPoint.count());
 
-        uniquesService.hit(SAMPLE_PATH, now, OTHER_ID);
-        dataPoint = dataPointRepository.get(key, now);
+        uniquesService.hit(now, OTHER_ID);
+        dataPoint = dataPointRepository.get(Key.DEFAULT, now);
         Assert.assertNotNull(dataPoint);
         Assert.assertEquals(2, dataPoint.count());
     }
@@ -97,11 +96,11 @@ public class UniquesServiceTestIT {
     @Test
     public void testHit2() throws Exception {
         final LocalDate now = LocalDate.now();
-        final Key key = new Key.KeyBuilder().add(SAMPLE_PATH).build();
 
-        DataPoint dataPoint = dataPointRepository.get(key, now);
+        DataPoint dataPoint = dataPointRepository.get(Key.DEFAULT, now);
         Assert.assertNull(dataPoint);
 
+        Key key = new Key.KeyBuilder().add(SAMPLE_PATH).build();
         uniquesService.hit(SAMPLE_PATH, DEFAULT_ID);
         dataPoint = dataPointRepository.get(key, now);
         Assert.assertNotNull(dataPoint);
@@ -121,18 +120,18 @@ public class UniquesServiceTestIT {
     @Test
     public void firstPerformanceTest() throws Exception {
         final LocalDate now = LocalDate.now();
-        final Key key = new Key.KeyBuilder().add(SAMPLE_PATH).build();
-
-        DataPoint dataPoint = dataPointRepository.get(key, now);
+        DataPoint dataPoint = dataPointRepository.get(Key.DEFAULT, now);
         Assert.assertNull(dataPoint);
 
         long startTime = System.currentTimeMillis();
         Random random = new Random();
         for (int i =0; i < 1000;i++) {
-            uniquesService.hit(SAMPLE_PATH, random.nextInt(10000));
+            uniquesService.hit(random.nextInt(1000));
+//            uniquesService.hit(i);
         }
 
         long estimatedTime = (System.currentTimeMillis() - startTime)/1000;
         System.out.println("Elapsed time: " + estimatedTime + " seconds.");
+        System.out.println("Total uniques:" + uniquesService.count(now));
     }
 }

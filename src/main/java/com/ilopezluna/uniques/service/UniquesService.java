@@ -13,8 +13,6 @@ import java.time.LocalDate;
  */
 public class UniquesService {
 
-    private final static String EMPTY = "";
-
     private final DataPointRepository dataPointRepository;
 
     public UniquesService(DataPointRepository dataPointRepository) {
@@ -33,14 +31,17 @@ public class UniquesService {
     }
 
     public void hit(LocalDate localDate, int id) {
-        Key key = getKey(EMPTY);
-        hit(localDate, id, key);
+        hit(localDate, id, Key.DEFAULT);
+    }
+
+    @Loggable
+    public void hit(int id) {
+        hit(LocalDate.now(), id, Key.DEFAULT);
     }
 
     private Key getKey(String path) {
         if ( StringUtils.isNullOrEmpty(path) ) {
-            return new Key.KeyBuilder()
-                    .build();
+            return Key.DEFAULT;
         }
         else {
             return new Key.KeyBuilder()
@@ -62,5 +63,11 @@ public class UniquesService {
             dataPoint = new DataPoint(key, localDate);
         }
         return dataPoint;
+    }
+
+    @Loggable
+    public int count(LocalDate localDate) {
+        final DataPoint dataPoint = dataPointRepository.get(Key.DEFAULT, localDate);
+        return dataPoint == null ? 0 : dataPoint.count();
     }
 }
