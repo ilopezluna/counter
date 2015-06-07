@@ -1,13 +1,13 @@
 package com.ilopezluna.uniques.domain;
 
-import com.amazonaws.util.StringUtils;
-
 /**
  * Created by ignasi on 1/6/15.
  */
 public class Key {
 
+    public final static String DEFAULT_KEY = "u";
     private final static String SEPARATOR = ":";
+
     private final String path;
 
     private Key(KeyBuilder builder) {
@@ -21,16 +21,10 @@ public class Key {
 
     public static class KeyBuilder {
 
-        private String path;
+        private String path = DEFAULT_KEY;
 
         public KeyBuilder add(String path) {
-            if (StringUtils.isNullOrEmpty(this.path) ) {
-                this.path = path;
-            }
-            else {
-                this.path = this.path.concat(SEPARATOR).concat(path);
-            }
-
+            this.path = this.path.concat(SEPARATOR).concat(path);
             return this;
         }
 
