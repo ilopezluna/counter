@@ -119,7 +119,7 @@ public class UniquesServiceTestIT {
     }
 
     @Test
-    public void lala() throws Exception {
+    public void firstPerformanceTest() throws Exception {
         final LocalDate now = LocalDate.now();
         final Key key = new Key.KeyBuilder().add(SAMPLE_PATH).build();
 
@@ -128,8 +128,8 @@ public class UniquesServiceTestIT {
 
         long startTime = System.currentTimeMillis();
         Random random = new Random();
-        for (int i =0; i < 10;i++) {
-            uniquesService.hit(SAMPLE_PATH, i);
+        for (int i =0; i < 1000;i++) {
+            uniquesService.hit(SAMPLE_PATH, random.nextInt(10000));
         }
 
         long estimatedTime = (System.currentTimeMillis() - startTime)/1000;

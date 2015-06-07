@@ -26,7 +26,6 @@ public class UniquesService {
         hit(localDate, id, key);
     }
 
-    @Loggable
     public void hit(String path, int id) {
         LocalDate now = LocalDate.now();
         Key key = getKey(path);
