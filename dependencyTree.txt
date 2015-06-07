@@ -1,17 +1,82 @@
 [INFO] Scanning for projects...
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
-[INFO] Building counter 1.0-SNAPSHOT
+[INFO] Building uniques 1.0-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
 [INFO] 
-[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ counter ---
-[INFO] com.ilopezluna:counter:jar:1.0-SNAPSHOT
-[INFO] \- junit:junit:jar:4.12:test
-[INFO]    \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ uniques ---
+[INFO] com.ilopezluna:uniques:jar:1.0-SNAPSHOT
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] +- com.amazonaws:aws-java-sdk:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-support:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-simpledb:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-simpleworkflow:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-storagegateway:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-route53:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-s3:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-importexport:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-sts:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-sqs:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-rds:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-redshift:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-elasticbeanstalk:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-glacier:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-iam:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-datapipeline:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-elasticloadbalancing:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-emr:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-elasticache:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-elastictranscoder:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-ec2:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-dynamodb:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-sns:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-cloudtrail:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-cloudwatch:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-logs:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-cognitoidentity:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-cognitosync:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-directconnect:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-cloudformation:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-cloudfront:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-kinesis:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-opsworks:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-ses:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-autoscaling:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-cloudsearch:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-cloudwatchmetrics:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-swf-libraries:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-codedeploy:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-kms:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-config:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-lambda:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-ecs:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-cloudhsm:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-ssm:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-workspaces:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-machinelearning:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-directory:jar:1.9.39:compile
+[INFO] |  +- com.amazonaws:aws-java-sdk-efs:jar:1.9.39:compile
+[INFO] |  \- com.amazonaws:aws-java-sdk-core:jar:1.9.39:compile
+[INFO] |     +- commons-logging:commons-logging:jar:1.1.3:compile
+[INFO] |     +- org.apache.httpcomponents:httpclient:jar:4.3.4:compile
+[INFO] |     |  +- org.apache.httpcomponents:httpcore:jar:4.3.2:compile
+[INFO] |     |  \- commons-codec:commons-codec:jar:1.6:compile
+[INFO] |     +- com.fasterxml.jackson.core:jackson-databind:jar:2.3.2:compile
+[INFO] |     |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.3.0:compile
+[INFO] |     |  \- com.fasterxml.jackson.core:jackson-core:jar:2.3.2:compile
+[INFO] |     \- joda-time:joda-time:jar:2.8:compile (version selected from constraint [2.2,))
+[INFO] +- com.jcabi:jcabi-aspects:jar:0.22:compile
+[INFO] |  +- com.jcabi:jcabi-log:jar:0.15:compile
+[INFO] |  +- org.aspectj:aspectjrt:jar:1.8.4:compile
+[INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:compile
+[INFO] +- org.slf4j:slf4j-api:jar:1.7.12:compile
+[INFO] \- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO]    \- log4j:log4j:jar:1.2.17:compile
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 1.488 s
-[INFO] Finished at: 2015-05-29T23:31:30+02:00
-[INFO] Final Memory: 12M/155M
+[INFO] Total time: 1.676 s
+[INFO] Finished at: 2015-06-07T22:13:11+02:00
+[INFO] Final Memory: 13M/226M
 [INFO] ------------------------------------------------------------------------

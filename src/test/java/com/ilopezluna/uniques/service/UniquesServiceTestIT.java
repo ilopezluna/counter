@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 
 /**
@@ -115,5 +116,23 @@ public class UniquesServiceTestIT {
         dataPoint = dataPointRepository.get(key, now);
         Assert.assertNotNull(dataPoint);
         Assert.assertEquals(2, dataPoint.count());
+    }
+
+    @Test
+    public void lala() throws Exception {
+        final LocalDate now = LocalDate.now();
+        final Key key = new Key.KeyBuilder().add(SAMPLE_PATH).build();
+
+        DataPoint dataPoint = dataPointRepository.get(key, now);
+        Assert.assertNull(dataPoint);
+
+        long startTime = System.currentTimeMillis();
+        Random random = new Random();
+        for (int i =0; i < 10;i++) {
+            uniquesService.hit(SAMPLE_PATH, i);
+        }
+
+        long estimatedTime = (System.currentTimeMillis() - startTime)/1000;
+        System.out.println("Elapsed time: " + estimatedTime + " seconds.");
     }
 }

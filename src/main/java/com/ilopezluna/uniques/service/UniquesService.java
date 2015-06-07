@@ -4,6 +4,7 @@ import com.amazonaws.util.StringUtils;
 import com.ilopezluna.uniques.domain.DataPoint;
 import com.ilopezluna.uniques.domain.Key;
 import com.ilopezluna.uniques.repository.DataPointRepository;
+import com.jcabi.aspects.Loggable;
 
 import java.time.LocalDate;
 
@@ -12,7 +13,8 @@ import java.time.LocalDate;
  */
 public class UniquesService {
 
-    private static final String EMPTY = "";
+    private final static String EMPTY = "";
+
     private final DataPointRepository dataPointRepository;
 
     public UniquesService(DataPointRepository dataPointRepository) {
@@ -24,6 +26,7 @@ public class UniquesService {
         hit(localDate, id, key);
     }
 
+    @Loggable
     public void hit(String path, int id) {
         LocalDate now = LocalDate.now();
         Key key = getKey(path);
@@ -47,12 +50,11 @@ public class UniquesService {
         }
     }
 
+    @Loggable
     private void hit(LocalDate localDate, int id, Key key) {
         DataPoint dataPoint = getOrCreateDataPoint(localDate, key);
         dataPoint.hit(id);
         dataPointRepository.save(dataPoint);
-        DataPoint dataPoint1 = dataPointRepository.get(key, localDate);
-        dataPoint1.count();
     }
 
     private DataPoint getOrCreateDataPoint(LocalDate localDate, Key key) {

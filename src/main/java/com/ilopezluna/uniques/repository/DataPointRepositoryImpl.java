@@ -6,6 +6,7 @@ import com.ilopezluna.uniques.domain.DataPeriod;
 import com.ilopezluna.uniques.domain.DataPoint;
 import com.ilopezluna.uniques.domain.Key;
 import com.ilopezluna.uniques.helper.BitSetHelper;
+import com.jcabi.aspects.Loggable;
 
 import java.time.LocalDate;
 import java.util.BitSet;
@@ -22,6 +23,7 @@ public class DataPointRepositoryImpl implements DataPointRepository {
         this.table = table;
     }
 
+    @Loggable
     public void save(DataPoint dataPoint) {
         Item item = new Item()
                 .withPrimaryKey(PRIMARY_KEY, dataPoint.getKey().toString())
