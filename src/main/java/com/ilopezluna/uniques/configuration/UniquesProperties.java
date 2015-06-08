@@ -1,5 +1,8 @@
 package com.ilopezluna.uniques.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +12,8 @@ import java.util.Properties;
  * Created by ignasi on 7/6/15.
  */
 public class UniquesProperties {
+
+    private final static Logger logger = LoggerFactory.getLogger(UniquesProperties.class);
 
     private final static String resourceName = "config.properties";
 
@@ -38,7 +43,7 @@ public class UniquesProperties {
         try {
             return (String) getProperties().get(key);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }
