@@ -7,8 +7,6 @@ import java.util.BitSet;
  */
 public class BitSetHelper {
 
-    public enum Operation { AND, OR }
-
     public static BitSet fromByteArray(byte[] bytes) {
         BitSet bits = new BitSet();
         for (int i = 0; i < bytes.length * 8; i++) {

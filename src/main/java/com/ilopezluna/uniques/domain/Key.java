@@ -5,7 +5,6 @@ package com.ilopezluna.uniques.domain;
  */
 public class Key {
 
-    public final static String DEFAULT_KEY = "u";
     public final static Key DEFAULT = new KeyBuilder().build();
 
     private final static String SEPARATOR = ":";
@@ -23,7 +22,7 @@ public class Key {
 
     public static class KeyBuilder {
 
-        private String path = DEFAULT_KEY;
+        private String path = "u";
 
         public KeyBuilder add(String path) {
             this.path = this.path.concat(SEPARATOR).concat(path);

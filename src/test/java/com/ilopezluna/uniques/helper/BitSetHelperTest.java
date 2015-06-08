@@ -19,16 +19,16 @@ public class BitSetHelperTest {
 
         base.set(1);
 
-        BitSet and = BitSetHelper.merge(base, against, BitSetHelper.Operation.AND);
-        BitSet or = BitSetHelper.merge(base, against, BitSetHelper.Operation.OR);
+        BitSet and = BitSetHelper.merge(base, against, Operation.AND);
+        BitSet or = BitSetHelper.merge(base, against, Operation.OR);
 
         Assert.assertFalse(and.get(1));
         Assert.assertTrue(or.get(1));
 
         against.set(1);
 
-        and = BitSetHelper.merge(base, against, BitSetHelper.Operation.AND);
-        or = BitSetHelper.merge(base, against, BitSetHelper.Operation.OR);
+        and = BitSetHelper.merge(base, against, Operation.AND);
+        or = BitSetHelper.merge(base, against, Operation.OR);
 
         Assert.assertTrue(and.get(1));
         Assert.assertTrue(or.get(1));
