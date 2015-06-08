@@ -7,6 +7,8 @@ import java.util.BitSet;
  */
 public class BitSetHelper {
 
+    public enum Operation { AND, OR }
+
     public static BitSet fromByteArray(byte[] bytes) {
         BitSet bits = new BitSet();
         for (int i = 0; i < bytes.length * 8; i++) {
@@ -15,5 +17,23 @@ public class BitSetHelper {
             }
         }
         return bits;
+    }
+
+    public static BitSet merge(BitSet base, BitSet against, Operation operation) {
+        final BitSet result = (BitSet) base.clone();
+        switch (operation) {
+
+            case AND:
+                result.and(against);
+                break;
+
+            case OR:
+                result.or(against);
+                break;
+
+            default:
+                throw new RuntimeException("Operation: " + operation + " not supported");
+        }
+        return result;
     }
 }
