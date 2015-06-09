@@ -39,4 +39,12 @@ public class DataPeriod {
     public void addDataPoint(DataPoint dataPoint) {
         dataPoints.put(dataPoint.getLocalDate(), dataPoint);
     }
+
+    public DataPoint getDataPoint(LocalDate localDate) {
+        return dataPoints.containsKey(localDate) ? dataPoints.get(localDate) : new DataPoint(Key.DEFAULT, localDate);
+    }
+
+    public Map<LocalDate, DataPoint> getDataPoints() {
+        return dataPoints;
+    }
 }
