@@ -12,11 +12,9 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.ilopezluna.uniques.repository.DataPointRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import java.util.ArrayList;
 
@@ -29,22 +27,25 @@ public class DynamoDBConfiguration {
 
     private final static Logger logger = LoggerFactory.getLogger(DynamoDBConfiguration.class);
 
-    @Autowired
-    private Environment env;
+    @Value("${dynamo.endpoint}")
+    private String endpoint;
 
-//    @Value("${username}")
-//    String name;
+    @Value("${dynamo.username}")
+    private String username;
+
+    @Value("${dynamo.password}")
+    private String password;
 
     @Bean
     public DynamoDB dynamoDB() {
 
         logger.info("Initializing DynamoDB client...");
-        logger.info("Username: " + env.getProperty("username"));
-//        logger.info("Username: " + name);
+        logger.info("Endpoint: " + endpoint);
+        logger.info("Username: " + username);
 
-        BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(env.getProperty("username"), env.getProperty("password"));
+        BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(username, password);
         AmazonDynamoDBClient client = new AmazonDynamoDBClient(basicAWSCredentials);
-        client.setEndpoint(env.getProperty("endpoint"));
+        client.setEndpoint(endpoint);
         return new DynamoDB(client);
     }
 
@@ -54,7 +55,7 @@ public class DynamoDBConfiguration {
         ArrayList<KeySchemaElement> keySchema = getKeySchemaElements();
 
         Table table = dynamoDB.getTable(DataPointRepository.TABLE_NAME);
-        if (table != null) {
+        if (table.getDescription() == null) {
             logger.info("Creating table: " + DataPointRepository.TABLE_NAME);
             CreateTableRequest request = getCreateTableRequest(attributeDefinitions, keySchema);
             table = dynamoDB.createTable(request);
@@ -76,7 +77,7 @@ public class DynamoDBConfiguration {
     }
 
     private ArrayList<KeySchemaElement> getKeySchemaElements() {
-        ArrayList<KeySchemaElement> keySchema = new ArrayList<KeySchemaElement>();
+        ArrayList<KeySchemaElement> keySchema = new ArrayList<>();
         keySchema.add(new KeySchemaElement()
                 .withAttributeName(DataPointRepository.PRIMARY_KEY)
                 .withKeyType(KeyType.HASH));
@@ -88,7 +89,7 @@ public class DynamoDBConfiguration {
     }
 
     private ArrayList<AttributeDefinition> getAttributeDefinitions() {
-        ArrayList<AttributeDefinition> attributeDefinitions = new ArrayList<AttributeDefinition>();
+        ArrayList<AttributeDefinition> attributeDefinitions = new ArrayList<>();
         attributeDefinitions.add(new AttributeDefinition()
                 .withAttributeName(DataPointRepository.PRIMARY_KEY)
                 .withAttributeType("S"));
