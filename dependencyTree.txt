@@ -4,7 +4,7 @@
 [INFO] Building uniques 1.0-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
 [INFO] 
-[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ uniques ---
+[INFO] --- maven-dependency-plugin:2.9:tree (default-cli) @ uniques ---
 [INFO] com.ilopezluna:uniques:jar:1.0-SNAPSHOT
 [INFO] +- junit:junit:jar:4.12:test
 [INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
@@ -59,24 +59,51 @@
 [INFO] |  +- com.amazonaws:aws-java-sdk-efs:jar:1.9.39:compile
 [INFO] |  \- com.amazonaws:aws-java-sdk-core:jar:1.9.39:compile
 [INFO] |     +- commons-logging:commons-logging:jar:1.1.3:compile
-[INFO] |     +- org.apache.httpcomponents:httpclient:jar:4.3.4:compile
-[INFO] |     |  +- org.apache.httpcomponents:httpcore:jar:4.3.2:compile
+[INFO] |     +- org.apache.httpcomponents:httpclient:jar:4.3.6:compile
+[INFO] |     |  +- org.apache.httpcomponents:httpcore:jar:4.3.3:compile
 [INFO] |     |  \- commons-codec:commons-codec:jar:1.6:compile
-[INFO] |     +- com.fasterxml.jackson.core:jackson-databind:jar:2.3.2:compile
-[INFO] |     |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.3.0:compile
-[INFO] |     |  \- com.fasterxml.jackson.core:jackson-core:jar:2.3.2:compile
-[INFO] |     \- joda-time:joda-time:jar:2.8:compile (version selected from constraint [2.2,))
+[INFO] |     \- joda-time:joda-time:jar:2.5:compile
 [INFO] +- com.jcabi:jcabi-aspects:jar:0.22:compile
 [INFO] |  +- com.jcabi:jcabi-log:jar:0.15:compile
-[INFO] |  +- org.aspectj:aspectjrt:jar:1.8.4:compile
+[INFO] |  +- org.aspectj:aspectjrt:jar:1.8.5:compile
 [INFO] |  \- javax.validation:validation-api:jar:1.1.0.Final:compile
 [INFO] +- org.slf4j:slf4j-api:jar:1.7.12:compile
-[INFO] \- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
-[INFO]    \- log4j:log4j:jar:1.2.17:compile
+[INFO] +- org.slf4j:slf4j-log4j12:jar:1.7.12:compile
+[INFO] |  \- log4j:log4j:jar:1.2.17:compile
+[INFO] \- org.springframework.boot:spring-boot-starter-web:jar:1.2.4.RELEASE:compile
+[INFO]    +- org.springframework.boot:spring-boot-starter:jar:1.2.4.RELEASE:compile
+[INFO]    |  +- org.springframework.boot:spring-boot:jar:1.2.4.RELEASE:compile
+[INFO]    |  +- org.springframework.boot:spring-boot-autoconfigure:jar:1.2.4.RELEASE:compile
+[INFO]    |  +- org.springframework.boot:spring-boot-starter-logging:jar:1.2.4.RELEASE:compile
+[INFO]    |  |  +- org.slf4j:jcl-over-slf4j:jar:1.7.12:compile
+[INFO]    |  |  +- org.slf4j:jul-to-slf4j:jar:1.7.12:compile
+[INFO]    |  |  +- org.slf4j:log4j-over-slf4j:jar:1.7.12:compile
+[INFO]    |  |  \- ch.qos.logback:logback-classic:jar:1.1.3:compile
+[INFO]    |  |     \- ch.qos.logback:logback-core:jar:1.1.3:compile
+[INFO]    |  \- org.yaml:snakeyaml:jar:1.14:compile
+[INFO]    +- org.springframework.boot:spring-boot-starter-tomcat:jar:1.2.4.RELEASE:compile
+[INFO]    |  +- org.apache.tomcat.embed:tomcat-embed-core:jar:8.0.23:compile
+[INFO]    |  +- org.apache.tomcat.embed:tomcat-embed-el:jar:8.0.23:compile
+[INFO]    |  +- org.apache.tomcat.embed:tomcat-embed-logging-juli:jar:8.0.23:compile
+[INFO]    |  \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:8.0.23:compile
+[INFO]    +- com.fasterxml.jackson.core:jackson-databind:jar:2.4.6:compile
+[INFO]    |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.4.6:compile
+[INFO]    |  \- com.fasterxml.jackson.core:jackson-core:jar:2.4.6:compile
+[INFO]    +- org.hibernate:hibernate-validator:jar:5.1.3.Final:compile
+[INFO]    |  +- org.jboss.logging:jboss-logging:jar:3.1.3.GA:compile
+[INFO]    |  \- com.fasterxml:classmate:jar:1.0.0:compile
+[INFO]    +- org.springframework:spring-core:jar:4.1.6.RELEASE:compile
+[INFO]    +- org.springframework:spring-web:jar:4.1.6.RELEASE:compile
+[INFO]    |  +- org.springframework:spring-aop:jar:4.1.6.RELEASE:compile
+[INFO]    |  |  \- aopalliance:aopalliance:jar:1.0:compile
+[INFO]    |  +- org.springframework:spring-beans:jar:4.1.6.RELEASE:compile
+[INFO]    |  \- org.springframework:spring-context:jar:4.1.6.RELEASE:compile
+[INFO]    \- org.springframework:spring-webmvc:jar:4.1.6.RELEASE:compile
+[INFO]       \- org.springframework:spring-expression:jar:4.1.6.RELEASE:compile
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 1.676 s
-[INFO] Finished at: 2015-06-07T22:13:11+02:00
-[INFO] Final Memory: 13M/226M
+[INFO] Total time: 1.647 s
+[INFO] Finished at: 2015-06-09T22:22:52+02:00
+[INFO] Final Memory: 19M/225M
 [INFO] ------------------------------------------------------------------------

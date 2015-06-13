@@ -7,6 +7,8 @@ import com.ilopezluna.uniques.domain.DataPoint;
 import com.ilopezluna.uniques.domain.Key;
 import com.ilopezluna.uniques.helper.BitSetHelper;
 import com.jcabi.aspects.Loggable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.BitSet;
@@ -15,10 +17,13 @@ import java.util.Iterator;
 /**
  * Created by ignasi on 31/5/15.
  */
+
+@Repository
 public class DataPointRepositoryImpl implements DataPointRepository {
 
     private final Table table;
 
+    @Autowired
     public DataPointRepositoryImpl(Table table) {
         this.table = table;
     }

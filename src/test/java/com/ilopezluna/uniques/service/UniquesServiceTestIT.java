@@ -1,18 +1,16 @@
 package com.ilopezluna.uniques.service;
 
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.document.TableCollection;
-import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
-import com.ilopezluna.uniques.configuration.DynamoDBConfiguration;
+import com.ilopezluna.uniques.Application;
 import com.ilopezluna.uniques.domain.DataPoint;
 import com.ilopezluna.uniques.domain.Key;
-import com.ilopezluna.uniques.helper.DynamoDBHelper;
-import com.ilopezluna.uniques.repository.DataPointRepositoryImpl;
-import org.junit.After;
+import com.ilopezluna.uniques.repository.DataPointRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.util.Random;
@@ -21,29 +19,27 @@ import java.util.Random;
 /**
  * Created by ignasi on 7/6/15.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
 public class UniquesServiceTestIT {
 
     private static final int DEFAULT_ID = 1;
     private static final int OTHER_ID = 2;
     private static final String SAMPLE_PATH = "path";
+
+    @Autowired
+    private DataPointRepository dataPointRepository;
+
+    @Autowired
     private UniquesService uniquesService;
-    private DataPointRepositoryImpl dataPointRepository;
 
     @Before
-    public void setUp() throws Exception {
-        DynamoDB dynamoDB = DynamoDBConfiguration.getDynamoDB();
-        TableCollection<ListTablesResult> tables = dynamoDB.listTables();
-        for (Table table : tables) {
-            table.delete();
-        }
-        Table dataPointTable = DynamoDBHelper.createDataPointTable();
-        dataPointRepository = new DataPointRepositoryImpl(dataPointTable);
-        uniquesService = new UniquesService(dataPointRepository);
-    }
+    public void before() {
+        final LocalDate now = LocalDate.now();
+        final Key key = new Key.KeyBuilder().build();
 
-    @After
-    public void tearDown() throws Exception {
-
+        dataPointRepository.delete(key, now);
+        dataPointRepository.delete(Key.DEFAULT, now);
     }
 
     @Test

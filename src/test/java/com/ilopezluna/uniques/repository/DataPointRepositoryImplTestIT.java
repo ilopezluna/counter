@@ -1,17 +1,15 @@
 package com.ilopezluna.uniques.repository;
 
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.document.TableCollection;
-import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
-import com.ilopezluna.uniques.configuration.DynamoDBConfiguration;
+import com.ilopezluna.uniques.Application;
 import com.ilopezluna.uniques.domain.DataPeriod;
 import com.ilopezluna.uniques.domain.DataPoint;
 import com.ilopezluna.uniques.domain.Key;
-import com.ilopezluna.uniques.helper.DynamoDBHelper;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.util.BitSet;
@@ -19,21 +17,15 @@ import java.util.BitSet;
 /**
  * Created by ignasi on 31/5/15.
  */
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
 public class DataPointRepositoryImplTestIT {
 
     private final static Key DEFAULT_KEY = new Key.KeyBuilder().add("default").build();
-    private DataPointRepository dataPointRepository;
 
-    @Before
-    public void setUp() throws Exception {
-        DynamoDB dynamoDB = DynamoDBConfiguration.getDynamoDB();
-        TableCollection<ListTablesResult> tables = dynamoDB.listTables();
-        for (Table table : tables) {
-            table.delete();
-        }
-        Table dataPointTable = DynamoDBHelper.createDataPointTable();
-        dataPointRepository = new DataPointRepositoryImpl(dataPointTable);
-    }
+    @Autowired
+    private DataPointRepository dataPointRepository;
 
     @Test
     public void testSave() throws Exception {

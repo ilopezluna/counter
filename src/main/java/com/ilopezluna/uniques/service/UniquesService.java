@@ -5,16 +5,20 @@ import com.ilopezluna.uniques.domain.DataPoint;
 import com.ilopezluna.uniques.domain.Key;
 import com.ilopezluna.uniques.repository.DataPointRepository;
 import com.jcabi.aspects.Loggable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
 /**
  * Created by ignasi on 2/6/15.
  */
+@Service
 public class UniquesService {
 
     private final DataPointRepository dataPointRepository;
 
+    @Autowired
     public UniquesService(DataPointRepository dataPointRepository) {
         this.dataPointRepository = dataPointRepository;
     }
