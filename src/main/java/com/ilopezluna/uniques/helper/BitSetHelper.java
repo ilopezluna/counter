@@ -34,4 +34,12 @@ public class BitSetHelper {
         }
         return result;
     }
+
+    public static String toString(BitSet bitSet) {
+        StringBuffer buffer = new StringBuffer();
+        for (byte b : bitSet.toByteArray()) {
+            buffer.append(String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0'));
+        }
+        return buffer.toString();
+    }
 }

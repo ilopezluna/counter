@@ -4,6 +4,7 @@ import com.ilopezluna.uniques.Application;
 import com.ilopezluna.uniques.domain.DataPeriod;
 import com.ilopezluna.uniques.domain.DataPoint;
 import com.ilopezluna.uniques.domain.Key;
+import com.ilopezluna.uniques.helper.BitSetHelper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,7 +61,7 @@ public class DataPointRepositoryImplTestIT {
         Assert.assertEquals(dataPoint.count(), fromDynamo.count());
         BitSet uniques = (BitSet) dataPoint.getUniques().clone();
         uniques.or(fromDynamo.getUniques());
-        Assert.assertEquals( 1, uniques.cardinality() );
+        Assert.assertEquals(1, uniques.cardinality());
     }
 
     @Test
@@ -98,5 +99,25 @@ public class DataPointRepositoryImplTestIT {
         dataPeriod = dataPointRepository.getDataPeriod(DEFAULT_KEY, from, to);
         Assert.assertNotNull(dataPeriod);
         Assert.assertEquals(2   , dataPeriod.count());
+    }
+
+    @Test
+    public void wrongConversion() {
+        LocalDate now = LocalDate.now();
+        DataPoint dataPoint = new DataPoint(DEFAULT_KEY, now);
+        dataPoint.hit(1);
+        dataPointRepository.save(dataPoint);
+        System.out.println(BitSetHelper.toString(dataPoint.getUniques()) + " <- DataPoint");
+        DataPoint fromDB = dataPointRepository.get(DEFAULT_KEY, now);
+        fromDB.hit(100);
+        dataPointRepository.save(fromDB);
+        System.out.println(BitSetHelper.toString(fromDB.getUniques()) + " <- fromDB");
+
+        fromDB = dataPointRepository.get(DEFAULT_KEY, now);
+        fromDB.hit(1);
+        System.out.println(BitSetHelper.toString(fromDB.getUniques()) + " <- fromDB");
+
+
+
     }
 }

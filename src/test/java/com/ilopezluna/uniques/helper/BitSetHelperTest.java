@@ -2,6 +2,8 @@ package com.ilopezluna.uniques.helper;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.BitSet;
 
@@ -10,6 +12,8 @@ import java.util.BitSet;
  * Created by ignasi on 8/6/15.
  */
 public class BitSetHelperTest {
+
+    private final static Logger logger = LoggerFactory.getLogger(BitSetHelperTest.class);
 
     @Test
     public void testMerge() throws Exception {
@@ -38,20 +42,12 @@ public class BitSetHelperTest {
     public void testFromByteArray() throws Exception {
 
         BitSet bitSet = new BitSet();
-        printBitSet(bitSet);
+        logger.info(BitSetHelper.toString(bitSet));
 
         bitSet.set(1);
-        printBitSet(bitSet);
+        logger.info(BitSetHelper.toString(bitSet));
 
         bitSet.set(100);
-        printBitSet(bitSet);
-    }
-
-    private void printBitSet(BitSet bitSet) {
-        System.out.print("\nBitSet : ");
-        for (byte b : bitSet.toByteArray()) {
-            String s1 = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
-            System.out.print(" " + s1);
-        }
+        logger.info(BitSetHelper.toString(bitSet));
     }
 }
