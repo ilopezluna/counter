@@ -28,7 +28,6 @@ public class UniquesService {
         hit(localDate, id, Key.DEFAULT);
     }
 
-    @Loggable
     public void hit(int id) {
         hit(LocalDate.now(), id, Key.DEFAULT);
     }

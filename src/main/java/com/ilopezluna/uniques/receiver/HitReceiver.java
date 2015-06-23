@@ -18,6 +18,7 @@ public class HitReceiver {
     }
 
     public void receiveMessage(int id) {
+        logger.debug("Message received: " + id);
         uniquesService.hit(id);
     }
 }

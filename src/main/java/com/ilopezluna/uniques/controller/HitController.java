@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 /**
  * Created by ignasi on 9/6/15.
  */
@@ -20,19 +18,12 @@ public class HitController {
 
     private final static Logger logger = LoggerFactory.getLogger(HitController.class);
 
-    private final AtomicLong atomicLong = new AtomicLong(0l);
-
     @Autowired
     RabbitTemplate rabbitTemplate;
 
     @RequestMapping("/hit")
     public void hit(@RequestParam(value="id") int id) {
-        atomicLong.incrementAndGet();
+        logger.debug("Send message to queue: " + id);
         rabbitTemplate.convertAndSend(QueueConfiguration.queueName, id);
-    }
-
-    @RequestMapping("/count")
-    public AtomicLong count() {
-        return atomicLong;
     }
 }
