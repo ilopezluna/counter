@@ -33,4 +33,25 @@ public class BitSetHelperTest {
         Assert.assertTrue(and.get(1));
         Assert.assertTrue(or.get(1));
     }
+
+    @Test
+    public void testFromByteArray() throws Exception {
+
+        BitSet bitSet = new BitSet();
+        printBitSet(bitSet);
+
+        bitSet.set(1);
+        printBitSet(bitSet);
+
+        bitSet.set(100);
+        printBitSet(bitSet);
+    }
+
+    private void printBitSet(BitSet bitSet) {
+        System.out.print("\nBitSet : ");
+        for (byte b : bitSet.toByteArray()) {
+            String s1 = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
+            System.out.print(" " + s1);
+        }
+    }
 }

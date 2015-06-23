@@ -1,12 +1,16 @@
 package com.ilopezluna.uniques.repository;
 
-import com.amazonaws.services.dynamodbv2.document.*;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.KeyAttribute;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
+import com.amazonaws.services.dynamodbv2.document.RangeKeyCondition;
+import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.ilopezluna.uniques.domain.DataPeriod;
 import com.ilopezluna.uniques.domain.DataPoint;
 import com.ilopezluna.uniques.domain.Key;
 import com.ilopezluna.uniques.helper.BitSetHelper;
-import com.jcabi.aspects.Loggable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +32,6 @@ public class DataPointRepositoryImpl implements DataPointRepository {
         this.table = table;
     }
 
-    @Loggable
     public void save(DataPoint dataPoint) {
         Item item = new Item()
                 .withPrimaryKey(PRIMARY_KEY, dataPoint.getKey().toString())

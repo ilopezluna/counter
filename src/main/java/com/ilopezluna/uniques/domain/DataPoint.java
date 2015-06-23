@@ -1,5 +1,8 @@
 package com.ilopezluna.uniques.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -7,6 +10,8 @@ import java.util.*;
  * Created by ignasi on 29/5/15.
  */
 public class DataPoint {
+
+    private final Logger logger = LoggerFactory.getLogger(DataPoint.class);
 
     private final Key key;
     private final LocalDate localDate;
@@ -35,7 +40,10 @@ public class DataPoint {
     }
 
     public void hit(int bitIndex) {
+        logger.info("Before: " + uniques);
+        logger.info("Index: " + bitIndex);
         uniques.set(bitIndex);
+        logger.info("After: " + uniques);
     }
 
     public int count() {
