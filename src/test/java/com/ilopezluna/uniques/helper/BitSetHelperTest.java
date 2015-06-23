@@ -42,12 +42,14 @@ public class BitSetHelperTest {
     public void testFromByteArray() throws Exception {
 
         BitSet bitSet = new BitSet();
-        logger.info(BitSetHelper.toString(bitSet));
-
         bitSet.set(1);
-        logger.info(BitSetHelper.toString(bitSet));
-
         bitSet.set(100);
-        logger.info(BitSetHelper.toString(bitSet));
+
+        BitSet fromByteArray = BitSetHelper.fromByteArray(bitSet.toByteArray());
+
+        Assert.assertEquals(2, fromByteArray.cardinality());
+        Assert.assertTrue(fromByteArray.get(1));
+        Assert.assertTrue(fromByteArray.get(100));
+
     }
 }
