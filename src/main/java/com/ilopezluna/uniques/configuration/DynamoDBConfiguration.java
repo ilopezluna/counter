@@ -9,6 +9,7 @@ import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
 import com.ilopezluna.uniques.repository.DataPointRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +56,8 @@ public class DynamoDBConfiguration {
         ArrayList<KeySchemaElement> keySchema = getKeySchemaElements();
 
         Table table = dynamoDB.getTable(DataPointRepository.TABLE_NAME);
-        if (table.getDescription() == null) {
+
+        try {
             logger.info("Creating table: " + DataPointRepository.TABLE_NAME);
             CreateTableRequest request = getCreateTableRequest(attributeDefinitions, keySchema);
             table = dynamoDB.createTable(request);
@@ -63,6 +65,10 @@ public class DynamoDBConfiguration {
                     + " to be created...this may take a while...");
             table.waitForActive();
         }
+        catch (ResourceInUseException e) {
+            logger.error("Table already exists");
+        }
+
         return table;
     }
 

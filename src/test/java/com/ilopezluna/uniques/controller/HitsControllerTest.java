@@ -1,42 +1,53 @@
 package com.ilopezluna.uniques.controller;
 
+import com.ilopezluna.uniques.configuration.QueueConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by ignasi on 13/6/15.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 @SpringApplicationConfiguration(classes = MockServletContext.class)
 @WebAppConfiguration
-public class UniquesControllerTest {
+public class HitsControllerTest {
 
     private MockMvc mvc;
 
+    @Mock
+    private RabbitTemplate rabbitTemplate;
+
     @Before
     public void setUp() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(new UniquesController()).build();
+        HitController hitController = new HitController();
+        ReflectionTestUtils.setField(hitController, "rabbitTemplate", rabbitTemplate);
+        mvc = MockMvcBuilders.standaloneSetup(hitController).build();
     }
 
     @Test
     public void testHit() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/hit").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/hit?id=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo("")));
+        verify(rabbitTemplate, times(1)).convertAndSend(QueueConfiguration.queueName, 1);
     }
 
 }

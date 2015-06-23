@@ -3,3 +3,5 @@
 target
 heroku
 heroku.pub
+#Used by jenv
+.java-version

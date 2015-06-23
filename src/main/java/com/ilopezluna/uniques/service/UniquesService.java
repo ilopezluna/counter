@@ -16,12 +16,8 @@ import java.time.LocalDate;
 @Service
 public class UniquesService {
 
-    private final DataPointRepository dataPointRepository;
-
     @Autowired
-    public UniquesService(DataPointRepository dataPointRepository) {
-        this.dataPointRepository = dataPointRepository;
-    }
+    private DataPointRepository dataPointRepository;
 
     public void hit(String path, int id) {
         Key key = getKey(path);
