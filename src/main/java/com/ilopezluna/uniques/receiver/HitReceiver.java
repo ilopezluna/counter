@@ -17,8 +17,19 @@ public class HitReceiver {
         this.uniquesService = uniquesService;
     }
 
-    public void receiveMessage(int id) {
-        logger.debug("Message received: " + id);
-        uniquesService.hit(id);
+    public void receiveMessage(HitMessage hitMessage) {
+        logger.debug("Message received: " + hitMessage);
+        if (hitMessage.getPath() != null && hitMessage.getLocalDate() != null) {
+            uniquesService.hit(hitMessage.getId(), hitMessage.getPath(), hitMessage.getLocalDate());
+        }
+        else if(hitMessage.getLocalDate() != null) {
+            uniquesService.hit(hitMessage.getLocalDate(), hitMessage.getId());
+        }
+        else if(hitMessage.getPath() != null) {
+            uniquesService.hit(hitMessage.getPath(), hitMessage.getId());
+        }
+        else {
+            uniquesService.hit(hitMessage.getId());
+        }
     }
 }

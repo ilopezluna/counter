@@ -1,6 +1,6 @@
 package com.ilopezluna.uniques.controller;
 
-import com.ilopezluna.uniques.configuration.QueueConfiguration;
+import com.ilopezluna.uniques.receiver.HitMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -47,7 +49,7 @@ public class HitsControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/hit?id=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo("")));
-        verify(rabbitTemplate, times(1)).convertAndSend(QueueConfiguration.queueName, 1);
+        verify(rabbitTemplate, times(1)).convertAndSend(anyString(), any(HitMessage.class));
     }
 
 }

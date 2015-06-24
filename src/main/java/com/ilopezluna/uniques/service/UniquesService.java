@@ -19,6 +19,11 @@ public class UniquesService {
     @Autowired
     private DataPointRepository dataPointRepository;
 
+    public void hit(int id, String path, LocalDate localDate) {
+        Key key = getKey(path);
+        hit(localDate, id, key);
+    }
+
     public void hit(String path, int id) {
         Key key = getKey(path);
         hit(LocalDate.now(), id, key);

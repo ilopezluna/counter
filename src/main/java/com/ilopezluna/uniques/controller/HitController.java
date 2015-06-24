@@ -1,6 +1,7 @@
 package com.ilopezluna.uniques.controller;
 
 import com.ilopezluna.uniques.configuration.QueueConfiguration;
+import com.ilopezluna.uniques.receiver.HitMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -23,7 +24,8 @@ public class HitController {
 
     @RequestMapping("/hit")
     public void hit(@RequestParam(value="id") int id) {
+        final HitMessage hitMessage = new HitMessage(id);
         logger.debug("Send message to queue: " + id);
-        rabbitTemplate.convertAndSend(QueueConfiguration.queueName, id);
+        rabbitTemplate.convertAndSend(QueueConfiguration.queueName, hitMessage);
     }
 }
