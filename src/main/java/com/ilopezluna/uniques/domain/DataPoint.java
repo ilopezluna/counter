@@ -40,10 +40,9 @@ public class DataPoint {
     }
 
     public void hit(int bitIndex) {
-        logger.info("Before: " + uniques);
-        logger.info("Index: " + bitIndex);
+        logger.debug("Index: " + bitIndex + "\nBefore: " + uniques);
         uniques.set(bitIndex);
-        logger.info("After: " + uniques);
+        logger.debug("After: " + uniques);
     }
 
     public int count() {

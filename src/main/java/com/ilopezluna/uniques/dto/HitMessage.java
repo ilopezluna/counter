@@ -1,4 +1,4 @@
-package com.ilopezluna.uniques.receiver;
+package com.ilopezluna.uniques.dto;
 
 import java.time.LocalDate;
 

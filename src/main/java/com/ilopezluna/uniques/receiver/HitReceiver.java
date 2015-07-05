@@ -1,5 +1,6 @@
 package com.ilopezluna.uniques.receiver;
 
+import com.ilopezluna.uniques.dto.HitMessage;
 import com.ilopezluna.uniques.service.UniquesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

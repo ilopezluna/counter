@@ -1,6 +1,6 @@
 package com.ilopezluna.uniques.controller;
 
-import com.ilopezluna.uniques.receiver.HitMessage;
+import com.ilopezluna.uniques.dto.HitMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
